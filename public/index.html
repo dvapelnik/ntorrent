@@ -1,10 +1,13 @@
 <!doctype html>
-<html>
+<html ng-app="ntorrent" ng-controller="MainController">
 <head>
     <meta charset="UTF-8">
-    <title>Sitemap maker</title>
+    <title>{{appName}}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script type="text/javascript" src="bower/angular/angular.js"></script>
+    <script type="text/javascript" src="bower/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="bower/ngprogress/build/ngProgress.js"></script>
 
     <script type="text/javascript" src="bower/angular-growl-v2/build/angular-growl.min.js"></script>
@@ -17,29 +20,31 @@
     <script type="text/javascript" src="bower/validator-js/validator.min.js"></script>
 
     <script type="text/javascript" src="js/ng-app.js"></script>
+    <script type="text/javascript" src="js/ng-app-controllers.js"></script>
+
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<div class="container" ng-app="ntorrent" ng-controller="MainController">
-    <div class="container-fluid" style="margin-top: 20px;">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/"> {{appName}} </a>
-                </div>
-            </div>
-        </nav>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/#/upload"> {{appName}} </a>
+        </div>
+    </div>
+</nav>
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div growl></div>
         <div class="row">
-            <div growl></div>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2" style="text-align: center">
-                    <h1>{{appTitle}}</h1>
-                    <hr/>
-                </div>
+            <div class="col-md-8 col-md-offset-2" style="text-align: center">
+                <h1>{{appName}}</h1>
+                <h2>{{appSlogan}}</h2>
+                <hr/>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-view>
 
-                </div>
             </div>
         </div>
     </div>

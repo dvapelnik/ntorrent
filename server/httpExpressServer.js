@@ -14,6 +14,8 @@ module.exports = function (options) {
   //region Config and Middleware
   app.use('/bower', express.static('public/bower'));
   app.use('/js', express.static('public/js'));
+  app.use('/css', express.static('public/css'));
+  app.use('/ng-templates', express.static('public/ng-templates'));
 
   app.use(cookieParser('very-secret-private-string-for-cookies', {}));
 

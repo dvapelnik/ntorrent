@@ -1,11 +1,38 @@
-(function (angular) {
-  angular
-    .module('ntorrent', [])
-    .run(function ($rootScope) {
-      $rootScope.appName = 'nTorrent';
-      $rootScope.appTitle = 'nTorrent - make and edit .torrent file!';
-    })
-    .controller('MainController', function ($scope) {
+var ngTorrentApp = angular
+  .module('ntorrent', ['ngRoute', 'angular-growl', 'dvNgValidator'])
+  .config(function ($routeProvider, growlProvider) {
+    growlProvider.globalReversedOrder(true);
+    growlProvider.globalTimeToLive(5000);
 
+    $routeProvider
+      .when('/upload', {
+        templateUrl: 'ng-templates/upload.html',
+        controller: 'UploadController'
+      })
+      .when('/edit', {
+        templateUrl: 'ng-templates/edit.html',
+        controller: 'EditController'
+      })
+      .otherwise({
+        redirectTo: '/upload'
+      });
+  })
+  .run(function ($rootScope, $location) {
+    $rootScope.appName = 'nTorrent';
+    $rootScope.appSlogan = 'make and edit .torrent file!';
+
+    $rootScope.torrentDataArray = [];
+
+    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+      if ($rootScope.torrentDataArray.length === 0) {
+        // no logged user, we should be going to #login
+        $location.path('/upload');
+      }
     });
-})(window.angular);
+  });
+
+var dvNgValidator = angular
+  .module('dvNgValidator', [])
+  .factory('validator', function () {
+    return window.validator
+  });

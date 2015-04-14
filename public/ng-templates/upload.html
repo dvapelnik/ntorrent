@@ -1,0 +1,63 @@
+<div class="row">
+    <form action="" class="text-center">
+        <div class="col-md-12 col-sm-12">
+            <h3 class="text-center">Upload .torrent file</h3>
+
+            <div class="row">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button
+                            type="button"
+                            ng-class="{'btn-info':uploadType == 'file'}"
+                            ng-click="setUploadType('file')"
+                            class="btn btn-default">
+                        <i class="fa fa-file"></i>&nbsp;Upload file
+                    </button>
+                    <button
+                            type="button"
+                            ng-class="{'btn-info': uploadType == 'link'}"
+                            ng-click="setUploadType('link')"
+                            class="btn btn-default">
+                        <i class="fa fa-link"></i>&nbsp;Insert link
+                    </button>
+                </div>
+            </div>
+            <div class="row" ng-switch="uploadType" style="padding: 20px 0;">
+                <div class="col-md-6 col-md-push-3 col-sm-12" ng-switch-when="link">
+                    <input
+                            style="margin: 0 auto; width: 90%;"
+                            type="text"
+                            class="form-control"
+                            ng-model="torrentLink"
+                            placeholder="Insert Link"/>
+                </div>
+                <div class="col-md-4 col-md-push-4 col-sm-12" ng-switch-when="file">
+                    <div class="input-group" style="padding-left: 20px;">
+                        <span class="input-group-btn">
+                            <span class="btn btn-primary btn-file">
+                                Browse&hellip;
+                                <input
+                                        type="file"
+                                        onchange="angular.element(this).scope().fileSelected(this)">
+                            </span>
+                        </span>
+                        <input
+                                style="width: 90%;"
+                                type="text"
+                                class="form-control"
+                                readonly
+                                value="{{torrentFile}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 text-center form-group">
+                    <button
+                            ng-click="uploadTorrent()"
+                            class="btn btn-success">
+                        Upload!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
