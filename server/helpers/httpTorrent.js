@@ -25,6 +25,7 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
       errorCallback(error);
     })
     .on('response', function (response) {
+      //@todo check response code - report client about error on 400+
       if (response.headers['content-type'] == 'application/x-bittorrent') {
         var timeStamp = getCurrentTimeStamp();
         var torrentWriteStream = fs
