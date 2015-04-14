@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sitemap maker</title>
+
+    <script type="text/javascript" src="bower/angular/angular.js"></script>
+    <script type="text/javascript" src="bower/ngprogress/build/ngProgress.js"></script>
+
+    <script type="text/javascript" src="bower/angular-growl-v2/build/angular-growl.min.js"></script>
+    <link rel="stylesheet" href="bower/angular-growl-v2/build/angular-growl.min.css"/>
+
+    <link rel="stylesheet" href="bower/bootstrap/dist/css/bootstrap.css"/>
+
+    <link rel="stylesheet" href="bower/components-font-awesome/css/font-awesome.min.css"/>
+
+    <script type="text/javascript" src="bower/validator-js/validator.min.js"></script>
+
+    <script type="text/javascript" src="js/ng-app.js"></script>
+</head>
+<body>
+<div class="container" ng-app="ntorrent" ng-controller="MainController">
+    <div class="container-fluid" style="margin-top: 20px;">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"> {{appName}} </a>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div growl></div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2" style="text-align: center">
+                    <h1>{{appTitle}}</h1>
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
