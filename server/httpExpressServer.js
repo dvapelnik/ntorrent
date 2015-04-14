@@ -1,13 +1,25 @@
+var _ = require('underscore');
+
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
-var fs = require('fs');
-var generator = require('./helpers/generator');
+var bodyParser = require('body-parser');
 
-winston = require('winston');
+var config = require('./config');
+var multipartyMiddleware = require('connect-multiparty')({
+  uploadDir: config.tmp
+});
+
+var uploadFileRouteMaker = require('./routes/uploadFileRoute');
+var uploadLinkRouteMaker = require('./routes/uploadLinkRoute');
 
 module.exports = function (options) {
   var logger = options.logger;
+
+  var routeMakerOptions = {
+    config: config,
+    logger: logger
+  };
 
   var app = new express();
 
@@ -18,6 +30,7 @@ module.exports = function (options) {
   app.use('/ng-templates', express.static('public/ng-templates'));
 
   app.use(cookieParser('very-secret-private-string-for-cookies', {}));
+  app.use(bodyParser.json());       // to support JSON-encoded bodies
 
   app.set('trust proxy', 1);
   app.use(session({
@@ -45,10 +58,16 @@ module.exports = function (options) {
   });
   //endregion
 
+  //region Routes
   app.get(/^\/(index.html)?$/, function (req, res) {
     logger.verbose('Responded: /');
     fs.createReadStream('public/index.html').pipe(res);
   });
+
+  app.post('/upload/file', multipartyMiddleware, uploadFileRouteMaker(routeMakerOptions));
+
+  app.post('/upload/link', uploadLinkRouteMaker(routeMakerOptions));
+  //endregion
 
   return app;
 };

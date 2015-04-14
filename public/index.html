@@ -8,7 +8,12 @@
 
     <script type="text/javascript" src="bower/angular/angular.js"></script>
     <script type="text/javascript" src="bower/angular-route/angular-route.js"></script>
+
     <script type="text/javascript" src="bower/ngprogress/build/ngProgress.js"></script>
+    <link rel="stylesheet" href="bower/ngprogress/ngProgress.css"/>
+
+    <script type="text/javascript" src="bower/ng-file-upload/angular-file-upload-shim.js"></script>
+    <script type="text/javascript" src="bower/ng-file-upload/angular-file-upload.js"></script>
 
     <script type="text/javascript" src="bower/angular-growl-v2/build/angular-growl.min.js"></script>
     <link rel="stylesheet" href="bower/angular-growl-v2/build/angular-growl.min.css"/>
@@ -25,7 +30,8 @@
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<div growl></div>
+<nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/#/upload"> {{appName}} </a>
@@ -38,6 +44,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2" style="text-align: center">
                 <h1>{{appName}}</h1>
+
                 <h2>{{appSlogan}}</h2>
                 <hr/>
             </div>

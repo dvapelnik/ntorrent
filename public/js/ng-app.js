@@ -1,5 +1,5 @@
 var ngTorrentApp = angular
-  .module('ntorrent', ['ngRoute', 'angular-growl', 'dvNgValidator'])
+  .module('ntorrent', ['ngRoute', 'angular-growl', 'dvNgValidator', 'angularFileUpload', 'ngProgress'])
   .config(function ($routeProvider, growlProvider) {
     growlProvider.globalReversedOrder(true);
     growlProvider.globalTimeToLive(5000);
@@ -17,7 +17,7 @@ var ngTorrentApp = angular
         redirectTo: '/upload'
       });
   })
-  .run(function ($rootScope, $location) {
+  .run(function ($rootScope, $location, ngProgress) {
     $rootScope.appName = 'nTorrent';
     $rootScope.appSlogan = 'make and edit .torrent file!';
 
@@ -25,7 +25,6 @@ var ngTorrentApp = angular
 
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
       if ($rootScope.torrentDataArray.length === 0) {
-        // no logged user, we should be going to #login
         $location.path('/upload');
       }
     });
