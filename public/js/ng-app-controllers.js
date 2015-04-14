@@ -20,9 +20,6 @@ ngTorrentApp
       $scope.uploadType = uploadType;
     };
 
-    //$scope.torrentFile = undefined;
-    //$scope.torrentLink = '';
-
     $scope.upload = function (files) {
       if (files.length == 1) {
         var file = files[0];

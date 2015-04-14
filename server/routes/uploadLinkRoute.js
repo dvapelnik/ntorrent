@@ -16,8 +16,6 @@ module.exports = function (options) {
         ? getTorrentSourceFromMagnet
         : getTorrentSourceFromRemoteFile;
 
-      console.log(resCallback);
-
       resCallback(sourceCallbackImpl, errorCallbackImpl);
     } else {
       res.status(400).send('Bad request: link not defined');
@@ -28,8 +26,6 @@ module.exports = function (options) {
         function (callback) {
           logger.verbose('Link');
           logger.verbose(req.body.link);
-
-          //@todo Check is request.body.link not empty
 
           httpTorrentDownloader(
             req.body.link, config.uploadPath + '/' + req.session.id,
