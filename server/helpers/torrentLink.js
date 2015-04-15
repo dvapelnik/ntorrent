@@ -30,9 +30,6 @@ module.exports = function (options) {
   function getTorrentSourceFromRemoteFile(sourceCallback, errorCallback) {
     async.waterfall([
       function (callback) {
-        logger.verbose('Link');
-        logger.verbose(url);
-
         httpTorrentDownloader(
           url, [uploadPath, sessionId].join('/'),
           function (timeStamp) {

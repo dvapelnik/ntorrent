@@ -11,7 +11,7 @@ ngTorrentApp
       }
     };
   })
-  .controller('UploadController', function ($scope, $rootScope, growl, $upload, ngProgress, $http) {
+  .controller('UploadController', function ($scope, $rootScope, growl, $upload, ngProgress, $http, ErrorVerbosity) {
     $scope.uploadType = 'link';
     //$scope.uploadType = 'file';
 
@@ -32,18 +32,26 @@ ngTorrentApp
           })
           .success(function (data, status, headers, config) {
             ngProgress.complete();
+            if (data.status == 'ERROR') {
+              growl.error(ErrorVerbosity[data.code]);
+            }
             console.log(data);
           });
       }
     };
 
     $scope.uploadTorrent = function (link) {
+      ngProgress.start();
       $http.post('upload/link', {link: link})
         .success(function (data, status, headers, config) {
+          ngProgress.complete();
           console.log(data);
         })
         .error(function (data, status, headers, config) {
-          console.log(data);
+          ngProgress.complete();
+          if (data.status == 'ERROR') {
+            growl.error(ErrorVerbosity[data.code]);
+          }
         });
       console.log('Uploading...');
     };

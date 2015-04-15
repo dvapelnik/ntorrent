@@ -25,12 +25,14 @@ module.exports = function (options) {
           res.json({status: 'OK', message: 'Parsed', data: parsedData});
         })
       }, function (error) {
-        res.status(500).json({status: 'OK', message: 'Error occurred'});
+        console.log(error);
+        res.status(500).json({status: 'ERROR', message: 'Error occurred', code: error.ownCode});
       });
     } else {
       res.status(400).json({
         status: 'ERROR',
-        message: 'Bad request: link not defined'
+        message: 'Bad request: link not defined',
+        code: 'LINKNOTDEFINEDERROR'
       });
     }
   };

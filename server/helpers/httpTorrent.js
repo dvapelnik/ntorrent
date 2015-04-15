@@ -25,6 +25,9 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
       errorCallback(error);
     })
     .on('response', function (response) {
+      if (response.statusCode !== 200) {
+        errorCallback({ownCode: 'HTTPERROR'});
+      }
       //@todo check response code - report client about error on 400+
       if (response.headers['content-type'] == 'application/x-bittorrent') {
         var timeStamp = getCurrentTimeStamp();
@@ -39,6 +42,8 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
           });
 
         torrentHttpRequest.pipe(torrentWriteStream);
+      } else {
+        errorCallback({ownCode: 'CONTENTTYPEERROR'});
       }
     })
 };

@@ -28,6 +28,16 @@ var ngTorrentApp = angular
         $location.path('/upload');
       }
     });
+  })
+  .factory('ErrorVerbosity', function () {
+    return {
+      HTTPERROR: 'HTTP error occurred',
+      FSERROR: 'File system error occured',
+      SAVEFILEERROR: 'Cannot save file',
+      REQERROR: 'HTTP request error occurred',
+      CONTENTTYPEERROR: 'Server responded with non bittorent content type',
+      LINKNOTDEFINEDERROR: 'Link not defined'
+    }
   });
 
 var dvNgValidator = angular
