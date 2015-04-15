@@ -40,7 +40,8 @@ var ngTorrentApp = angular
       READDIRERROR: 'Readdir error',
       FILENAMEEMPTY: 'File name is empty',
       FILENOTFOUND: 'File not found',
-      FILENOTDELETED: 'File not deleted'
+      FILENOTDELETED: 'File not deleted',
+      MIMEERROR: 'Unsupported file type'
     }
   })
   .factory('Torrent', function () {

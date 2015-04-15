@@ -15,6 +15,7 @@ module.exports = function (options) {
       file: req.files.file,
       uniqueFilePrefixLength: config.uniqueFilePrefixLength,
       uniqueFileDelimiter: config.uniqueFileDelimiter,
+      mimeList: ['application/x-bittorrent'],
       logger: logger
     });
 

@@ -24,13 +24,15 @@ ngTorrentApp.controller('UploadController', function ($scope,
           var progressPercentage = parseInt(100.0 * event.loaded / event.total);
           ngProgress.set(progressPercentage);
         })
-        .success(function (data, status, headers, config) {
+        .success(function (data) {
+          ngProgress.complete();
+          $scope.addToTorrent(new Torrent(data.data));
+        })
+        .error(function (data) {
           ngProgress.complete();
           if (data.status == 'ERROR') {
             growl.error(ErrorVerbosity[data.code]);
           }
-          $scope.addToTorrent(new Torrent(data.data));
-          console.log(data);
         });
     }
   };
@@ -50,4 +52,4 @@ ngTorrentApp.controller('UploadController', function ($scope,
       });
     console.log('Uploading...');
   };
-})
+});

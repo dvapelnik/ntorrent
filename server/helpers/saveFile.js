@@ -1,6 +1,7 @@
 var fs = require('fs');
 var async = require('async');
 var generator = require('../helpers/generator');
+var mime = require('mime');
 
 module.exports = function (options) {
   if (
@@ -10,7 +11,8 @@ module.exports = function (options) {
     options.file === undefined ||
     options.uniqueFilePrefixLength === undefined ||
     options.uniqueFileDelimiter === undefined ||
-    options.logger === undefined
+    options.logger === undefined ||
+    options.mimeList === undefined
   ) {
     throw new Error('Options not fully implemented');
   }
@@ -21,11 +23,17 @@ module.exports = function (options) {
   var uniqueFilePrefixLength = options.uniqueFilePrefixLength;
   var uniqueFileDelimiter = options.uniqueFileDelimiter;
   var logger = options.logger;
+  var mimeList = options.mimeList;
 
   return saveFile;
 
   function saveFile(successCallback, errorCallback) {
     async.waterfall([
+      function (callback) {
+        callback(mimeList.indexOf(mime.lookup(file.name)) === -1
+          ? {ownCode: 'MIMEERROR'}
+          : null);
+      },
       require('../helpers/asyncWorkers').makeSessionDirWorker([uploadPath, sessionId].join('/')),
       function makeUniqueFileName(uploadPath, callback) {
         var newFileName = generator(uniqueFilePrefixLength) + uniqueFileDelimiter + file.name;
@@ -45,7 +53,7 @@ module.exports = function (options) {
       }
     ], function (error, filePath) {
       if (error) {
-        error.ownCode = 'SAVEFILEERROR';
+        error.ownCode = error.ownCode || 'SAVEFILEERROR';
         errorCallback(error);
       } else {
         successCallback(filePath);
