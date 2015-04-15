@@ -9,6 +9,7 @@ module.exports = function (app) {
   app.use('/js', express.static('public/js'));
   app.use('/css', express.static('public/css'));
   app.use('/ng-templates', express.static('public/ng-templates'));
+  app.use('/storage', express.static('storage'));
 
   app.use(cookieParser('very-secret-private-string-for-cookies', {}));
   app.use(bodyParser.json());       // to support JSON-encoded bodies

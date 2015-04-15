@@ -2,7 +2,12 @@ var parseTorrent = require('parse-torrent');
 var async = require('async');
 var fs = require('fs');
 
+var asyncWorkers = require('../helpers/asyncWorkers');
 var httpTorrentDownloader = require('./httpTorrent');
+
+function getCurrentTimeStamp() {
+  return +new Date();
+}
 
 module.exports = function (options) {
   if (
@@ -19,17 +24,15 @@ module.exports = function (options) {
   var url = options.url;
   var sessionId = options.sessionId;
   var uploadPath = options.uploadPath;
-  var response = options.response;
   var logger = options.logger;
 
   return {
-    getTorrentSourceFromRemoteFile: getTorrentSourceFromRemoteFile,
-    getTorrentSourceFromMagnet: getTorrentSourceFromMagnet
+    getTorrentPathFromRemoteFile: getTorrentPathFromRemoteFile
   };
 
-  function getTorrentSourceFromRemoteFile(sourceCallback, errorCallback) {
+  function getTorrentPathFromRemoteFile(successCallback, errorCallback) {
     async.waterfall([
-      require('../helpers/asyncWorkers').makeSessionDirWorker([uploadPath, sessionId].join('/')),
+      asyncWorkers.makeSessionDirWorker([uploadPath, sessionId].join('/')),
       function (uploadSessionPath, callback) {
         httpTorrentDownloader(
           url, uploadSessionPath,
@@ -41,27 +44,14 @@ module.exports = function (options) {
           });
       },
       function (timestamp, callback) {
-        fs.readFile(
-          [uploadPath, sessionId, timestamp + '.torrent'].join('/'),
-          function (error, data) {
-            if (error) {
-              callback(error);
-            } else {
-              callback(null, data);
-
-            }
-          });
+        callback(null, [uploadPath, sessionId, timestamp + '.torrent'].join('/'));
       }
-    ], function (error, source) {
+    ], function (error, filePath) {
       if (error) {
         errorCallback(error);
       } else {
-        sourceCallback(source);
+        successCallback(filePath);
       }
     });
-  }
-
-  function getTorrentSourceFromMagnet(sourceCallback) {
-    sourceCallback(url);
   }
 };

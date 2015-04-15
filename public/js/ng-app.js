@@ -32,6 +32,7 @@ var ngTorrentApp = angular
   .factory('ErrorVerbosity', function () {
     return {
       HTTPERROR: 'HTTP error occurred',
+      URLWRONGERROR: 'Wrong url',
       FSERROR: 'File system error occured',
       SAVEFILEERROR: 'Cannot save file',
       REQERROR: 'HTTP request error occurred',

@@ -42,7 +42,7 @@ ngTorrentApp.controller('UploadController', function ($scope,
     $http.post('upload/link', {link: link})
       .success(function (data) {
         ngProgress.complete();
-        console.log(data);
+        $scope.addToTorrent(new Torrent(data.data));
       })
       .error(function (data) {
         ngProgress.complete();
@@ -50,6 +50,5 @@ ngTorrentApp.controller('UploadController', function ($scope,
           growl.error(ErrorVerbosity[data.code]);
         }
       });
-    console.log('Uploading...');
   };
 });
