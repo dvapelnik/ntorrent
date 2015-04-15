@@ -1,6 +1,4 @@
-var fs = require('fs');
 var async = require('async');
-var generator = require('../helpers/generator');
 
 module.exports = function (options) {
   var config = options.config;
@@ -9,46 +7,33 @@ module.exports = function (options) {
   return function (req, res) {
     logger.verbose('Responded: /upload/file');
 
-    var file = req.files.file;
+    var saveFile = require('../helpers/saveFile')({
+      uploadPathRoot: config.uploadPath,
+      sessionId: req.session.id,
+      file: req.files.file,
+      uniqueFilePrefixLength: config.uniqueFilePrefixLength,
+      uniqueFileDelimiter: config.uniqueFileDelimiter,
+      logger: logger
+    });
 
     async.waterfall([
       function (callback) {
-        var uploadPath = config.uploadPath + '/' + req.session.id;
-
-        fs.mkdir(uploadPath, 0775, function (error) {
-          if (error && error.code !== 'EEXIST') {
+        saveFile(
+          function (savedFilePath) {
+            callback(null, savedFilePath);
+          }, function (error) {
             callback(error);
-          } else {
-            callback(null, uploadPath);
           }
-        });
+        );
       },
-      function makeUniqueFileName(uploadPath, callback) {
-        var newFileName = generator(config.uniqueFilePrefixLength) + config.uniqueFileDelimiter + file.name;
-
-        fs.exists(uploadPath + '/' + newFileName, function (exists) {
-          if (exists) {
-            makeUniqueFileName(uploadPath, callback);
-          } else {
-            callback(null, uploadPath, newFileName);
-          }
-        })
-      },
-      function (uploadPath, newFileName, callback) {
-        fs.rename(file.path, uploadPath + '/' + newFileName, function (error) {
-          callback(error);
-        });
-      },
-      function (callback) {
+      function (savedFilePath, callback) {
         callback();
       }
     ], function (error, result) {
       if (error) {
-        logger.error(error);
-        console.log(error);
-        res.send({status: 'ERROR', message: 'Some error occurred'});
+        res.status(500).send('Save error occurred');
       } else {
-        res.send({status: 'OK', message: 'File saved'});
+        res.json({status: 'OK', message: 'File saved'});
       }
     });
   }
