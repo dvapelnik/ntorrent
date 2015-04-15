@@ -64,15 +64,21 @@
                 <th>File name</th>
                 <th class="text-center">Actions</th>
             </tr>
-            <tr ng-repeat="torrent in torrents track by $index">
+            <tr ng-repeat="torrent in torrents | orderBy : 'name' : 'reverse'">
                 <td>{{$index + 1}}</td>
                 <td>{{torrent.name}}</td>
                 <td class="text-center">
                     <a ng-href="{{torrent.href}}" class="btn btn-xs btn-success fa fa-download"></a>
-                    <button class="btn btn-xs btn-primary" title="Edit">
+                    <button
+                            class="btn btn-xs btn-primary"
+                            title="Edit"
+                            ng-click="prepareToEdit(torrent)">
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button class="btn btn-xs btn-danger" title="Remove" ng-click="removeFromTorrents(torrent)">
+                    <button
+                            class="btn btn-xs btn-danger"
+                            title="Remove"
+                            ng-click="removeFromTorrents(torrent)">
                         <i class="fa fa-times"></i>
                     </button>
                 </td>

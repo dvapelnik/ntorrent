@@ -35,6 +35,7 @@ var ngTorrentApp = angular
       URLWRONGERROR: 'Wrong url',
       FSERROR: 'File system error occured',
       SAVEFILEERROR: 'Cannot save file',
+      READFILEERROR: 'Cannot read requested file',
       REQERROR: 'HTTP request error occurred',
       CONTENTTYPEERROR: 'Server responded with non bittorent content type',
       LINKNOTDEFINEDERROR: 'Link not defined',

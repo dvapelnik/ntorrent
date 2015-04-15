@@ -33,7 +33,7 @@ module.exports = function (options) {
       if (error) {
         res.status(500).json({status: 'ERROR', message: 'Save error occurred', code: error.ownCode});
       } else {
-        res.json({status: 'OK', message: 'Parsed', data: savedFilePath});
+        res.json({status: 'OK', message: 'Saved', data: savedFilePath});
       }
     });
   }

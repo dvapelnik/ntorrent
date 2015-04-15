@@ -53,4 +53,18 @@ ngTorrentApp.controller('MainController', function ($scope,
   };
 
   $scope.updateTorrentFileList();
+
+  $scope.prepareToEdit = function (torrent) {
+    ngProgress.start();
+    $http
+      .post('torrent/parse', {fileName: torrent.name})
+      .success(function (data) {
+        ngProgress.complete();
+        console.log(data);
+      })
+      .error(function (data) {
+        growl.error(ErrorVerbosity[data.code]);
+        ngProgress.complete();
+      });
+  }
 });

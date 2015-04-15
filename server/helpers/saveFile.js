@@ -36,9 +36,9 @@ module.exports = function (options) {
       },
       require('../helpers/asyncWorkers').makeSessionDirWorker([uploadPath, sessionId].join('/')),
       function makeUniqueFileName(uploadPath, callback) {
-        var newFileName = generator(uniqueFilePrefixLength) + uniqueFileDelimiter + file.name;
+        var newFileName = [+new Date(), file.name].join(uniqueFileDelimiter);
 
-        fs.exists(uploadPath + '/' + newFileName, function (exists) {
+        fs.exists([uploadPath, newFileName].join('/'), function (exists) {
           if (exists) {
             makeUniqueFileName(uploadPath, callback);
           } else {

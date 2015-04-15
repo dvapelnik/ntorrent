@@ -16,7 +16,7 @@ module.exports = function (options) {
 
       torrentLink.getTorrentPathFromRemoteFile(
         function (filePath) {
-          res.json({status: 'OK', message: 'Parsed', data: filePath});
+          res.json({status: 'OK', message: 'Saved', data: filePath});
         },
         function (error) {
           res.status(500).json({status: 'ERROR', message: 'Error occurred', code: error.ownCode});
