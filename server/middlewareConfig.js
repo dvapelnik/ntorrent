@@ -2,6 +2,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
 var bodyParser = require('body-parser');
+var generator = require('./helpers/generator');
 
 module.exports = function (app) {
   app.use('/bower', express.static('public/bower'));

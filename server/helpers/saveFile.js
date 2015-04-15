@@ -5,7 +5,7 @@ var generator = require('../helpers/generator');
 module.exports = function (options) {
   if (
     options === undefined ||
-    options.uploadPathRoot === undefined ||
+    options.uploadPath === undefined ||
     options.sessionId === undefined ||
     options.file === undefined ||
     options.uniqueFilePrefixLength === undefined ||
@@ -15,7 +15,7 @@ module.exports = function (options) {
     throw new Error('Options not fully implemented');
   }
 
-  var uploadPathRoot = options.uploadPathRoot;
+  var uploadPath = options.uploadPath;
   var file = options.file;
   var sessionId = options.sessionId;
   var uniqueFilePrefixLength = options.uniqueFilePrefixLength;
@@ -26,17 +26,7 @@ module.exports = function (options) {
 
   function saveFile(successCallback, errorCallback) {
     async.waterfall([
-      function (callback) {
-        var uploadPath = uploadPathRoot + '/' + sessionId;
-
-        fs.mkdir(uploadPath, 0775, function (error) {
-          if (error && error.code !== 'EEXIST') {
-            callback(error);
-          } else {
-            callback(null, uploadPath);
-          }
-        });
-      },
+      require('../helpers/asyncWorkers').makeSessionDirWorker([uploadPath, sessionId].join('/')),
       function makeUniqueFileName(uploadPath, callback) {
         var newFileName = generator(uniqueFilePrefixLength) + uniqueFileDelimiter + file.name;
 

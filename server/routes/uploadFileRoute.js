@@ -10,7 +10,7 @@ module.exports = function (options) {
     logger.verbose('Responded: /upload/file');
 
     var saveFile = require('../helpers/saveFile')({
-      uploadPathRoot: config.uploadPath,
+      uploadPath: config.uploadPath,
       sessionId: req.session.id,
       file: req.files.file,
       uniqueFilePrefixLength: config.uniqueFilePrefixLength,

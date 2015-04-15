@@ -16,18 +16,19 @@ module.exports = function (options) {
         logger: logger
       });
 
-      var resCallback = req.body.link.match(/^magnet/) != null
-        ? torrentLink.getTorrentSourceFromMagnet        // source is magnet link
-        : torrentLink.getTorrentSourceFromRemoteFile;   // source is file content
+      var processSource = req.body.link.match(/^magnet/) != null
+        ? torrentLink.getTorrentSourceFromMagnet        // source looks like a magnet link
+        : torrentLink.getTorrentSourceFromRemoteFile;   // source looks like a file content
 
-      resCallback(function (source) {
-        torrentParser(source, function (parsedData) {
-          res.json({status: 'OK', message: 'Parsed', data: parsedData});
-        })
-      }, function (error) {
-        console.log(error);
-        res.status(500).json({status: 'ERROR', message: 'Error occurred', code: error.ownCode});
-      });
+      processSource(
+        function (source) {
+          torrentParser(source, function (parsedData) {
+            res.json({status: 'OK', message: 'Parsed', data: parsedData});
+          })
+        },
+        function (error) {
+          res.status(500).json({status: 'ERROR', message: 'Error occurred', code: error.ownCode});
+        });
     } else {
       res.status(400).json({
         status: 'ERROR',

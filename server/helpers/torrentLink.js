@@ -29,9 +29,10 @@ module.exports = function (options) {
 
   function getTorrentSourceFromRemoteFile(sourceCallback, errorCallback) {
     async.waterfall([
-      function (callback) {
+      require('../helpers/asyncWorkers').makeSessionDirWorker([uploadPath, sessionId].join('/')),
+      function (uploadSessionPath, callback) {
         httpTorrentDownloader(
-          url, [uploadPath, sessionId].join('/'),
+          url, uploadSessionPath,
           function (timeStamp) {
             callback(null, timeStamp)
           },
