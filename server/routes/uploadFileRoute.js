@@ -27,22 +27,12 @@ module.exports = function (options) {
             callback(error);
           }
         );
-      },
-      function (savedFilePath, callback) {
-        fs.readFile(savedFilePath, function (error, fileContent) {
-          callback(error, fileContent);
-        });
-      },
-      function (fileContent, callback) {
-        torrentParser(fileContent, function (parsedData) {
-          callback(null, parsedData);
-        })
       }
-    ], function (error, parsedData) {
+    ], function (error, savedFilePath) {
       if (error) {
         res.status(500).json({status: 'ERROR', message: 'Save error occurred', code: error.ownCode});
       } else {
-        res.json({status: 'OK', message: 'Parsed', data: parsedData});
+        res.json({status: 'OK', message: 'Parsed', data: savedFilePath});
       }
     });
   }

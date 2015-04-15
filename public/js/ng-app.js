@@ -1,5 +1,5 @@
 var ngTorrentApp = angular
-  .module('ntorrent', ['ngRoute', 'angular-growl', 'dvNgValidator', 'angularFileUpload', 'ngProgress'])
+  .module('ntorrent', ['ngRoute', 'angular-growl', 'dvNgValidator', 'angularFileUpload', 'ngProgress', 'underscore'])
   .config(function ($routeProvider, growlProvider) {
     growlProvider.globalReversedOrder(true);
     growlProvider.globalTimeToLive(5000);
@@ -36,12 +36,26 @@ var ngTorrentApp = angular
       SAVEFILEERROR: 'Cannot save file',
       REQERROR: 'HTTP request error occurred',
       CONTENTTYPEERROR: 'Server responded with non bittorent content type',
-      LINKNOTDEFINEDERROR: 'Link not defined'
+      LINKNOTDEFINEDERROR: 'Link not defined',
+      READDIRERROR: 'Readdir error',
+      FILENAMEEMPTY: 'File name is empty',
+      FILENOTFOUND: 'File not found',
+      FILENOTDELETED: 'File not deleted'
+    }
+  })
+  .factory('Torrent', function () {
+    return function Torrent(torrentPath) {
+      this.href = torrentPath;
+      this.name = torrentPath.match(/[^\/]+$/)[0];
     }
   });
 
-var dvNgValidator = angular
-  .module('dvNgValidator', [])
+var dvNgValidator = angular.module('dvNgValidator', [])
   .factory('validator', function () {
     return window.validator
+  });
+
+var underscore = angular.module('underscore', [])
+  .factory('_', function () {
+    return window._;
   });

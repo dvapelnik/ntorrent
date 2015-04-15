@@ -56,3 +56,26 @@
         </div>
     </form>
 </div>
+<div class="row">
+    <div class="col-md-6 col-md-push-3 col-sm-12">
+        <table class="table" ng-show="torrents.length > 0">
+            <tr>
+                <th>#</th>
+                <th>File name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            <tr ng-repeat="torrent in torrents track by $index">
+                <td>{{$index + 1}}</td>
+                <td>{{torrent.name}}</td>
+                <td class="text-center">
+                    <button class="btn btn-xs btn-primary" title="Edit">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                    <button class="btn btn-xs btn-danger" title="Remove" ng-click="removeFromTorrents(torrent)">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

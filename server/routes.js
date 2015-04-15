@@ -1,6 +1,10 @@
 var multipartyMiddlewareMaker = require('connect-multiparty');
+
 var uploadFileRouteMaker = require('./routes/uploadFileRoute');
 var uploadLinkRouteMaker = require('./routes/uploadLinkRoute');
+var torrentListRouteMaker = require('./routes/torrentList');
+var torrentRemoveRouteMaker = require('./routes/torrentRemove');
+
 var fs = require('fs');
 
 module.exports = function (app, options) {
@@ -24,4 +28,8 @@ module.exports = function (app, options) {
   app.post('/upload/file', multipartyMiddleware, uploadFileRouteMaker(routeMakerOptions));
 
   app.post('/upload/link', uploadLinkRouteMaker(routeMakerOptions));
-}
+
+  app.get('/torrent/list', torrentListRouteMaker(routeMakerOptions));
+
+  app.post('/torrent/remove', torrentRemoveRouteMaker(routeMakerOptions));
+};
