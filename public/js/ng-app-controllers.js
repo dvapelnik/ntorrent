@@ -32,7 +32,7 @@ ngTorrentApp
           })
           .success(function (data, status, headers, config) {
             ngProgress.complete();
-            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+            console.log(data);
           });
       }
     };

@@ -24,9 +24,7 @@ module.exports = function (options) {
 
   return {
     getTorrentSourceFromRemoteFile: getTorrentSourceFromRemoteFile,
-    getTorrentSourceFromMagnet: getTorrentSourceFromMagnet,
-    sourceCallbackImpl: sourceCallbackImpl,
-    errorCallbackImpl: errorCallbackImpl
+    getTorrentSourceFromMagnet: getTorrentSourceFromMagnet
   };
 
   function getTorrentSourceFromRemoteFile(sourceCallback, errorCallback) {
@@ -67,15 +65,5 @@ module.exports = function (options) {
 
   function getTorrentSourceFromMagnet(sourceCallback) {
     sourceCallback(url);
-  }
-
-  function sourceCallbackImpl(source) {
-    var torrentParsedData = parseTorrent(source);
-
-    response.json(torrentParsedData);
-  }
-
-  function errorCallbackImpl(error) {
-    response.status(500).send('Error occurred');
   }
 };

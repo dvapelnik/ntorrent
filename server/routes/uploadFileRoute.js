@@ -1,4 +1,6 @@
 var async = require('async');
+var torrentParser = require('../helpers/torrentParser');
+var fs = require('fs');
 
 module.exports = function (options) {
   var config = options.config;
@@ -27,13 +29,20 @@ module.exports = function (options) {
         );
       },
       function (savedFilePath, callback) {
-        callback();
+        fs.readFile(savedFilePath, function (error, fileContent) {
+          callback(error, fileContent);
+        });
+      },
+      function (fileContent, callback) {
+        torrentParser(fileContent, function (parsedData) {
+          callback(null, parsedData);
+        })
       }
-    ], function (error, result) {
+    ], function (error, parsedData) {
       if (error) {
-        res.status(500).send('Save error occurred');
+        res.status(500).json({status: 'ERROR', message: 'Save error occurred'});
       } else {
-        res.json({status: 'OK', message: 'File saved'});
+        res.json({status: 'OK', message: 'Parsed', data: parsedData});
       }
     });
   }
