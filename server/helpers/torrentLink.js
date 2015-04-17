@@ -1,4 +1,3 @@
-var parseTorrent = require('parse-torrent');
 var async = require('async');
 var fs = require('fs');
 

@@ -1,5 +1,9 @@
 var ngTorrentApp = angular
-  .module('ntorrent', ['ngRoute', 'angular-growl', 'dvNgValidator', 'angularFileUpload', 'ngProgress', 'underscore'])
+  .module('ntorrent', [
+    'ngRoute', 'angular-growl', 'dvNgValidator',
+    'angularFileUpload', 'ngProgress', 'underscore',
+    'asyncWrapped'
+  ])
   .config(function ($routeProvider, growlProvider) {
     growlProvider.globalReversedOrder(true);
     growlProvider.globalTimeToLive(5000);
@@ -17,23 +21,16 @@ var ngTorrentApp = angular
         redirectTo: '/upload'
       });
   })
-  .run(function ($rootScope, $location, ngProgress) {
+  .run(function ($rootScope) {
     $rootScope.appName = 'nTorrent';
     $rootScope.appSlogan = 'make and edit .torrent file!';
-
-    $rootScope.torrentDataArray = [];
-
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
-      if ($rootScope.torrentDataArray.length === 0) {
-        $location.path('/upload');
-      }
-    });
   })
   .factory('ErrorVerbosity', function () {
     return {
       HTTPERROR: 'HTTP error occurred',
       URLWRONGERROR: 'Wrong url',
       FSERROR: 'File system error occured',
+      FDOPENERROR: 'File descriptor error',
       SAVEFILEERROR: 'Cannot save file',
       READFILEERROR: 'Cannot read requested file',
       REQERROR: 'HTTP request error occurred',
@@ -51,6 +48,15 @@ var ngTorrentApp = angular
       this.href = torrentPath;
       this.name = torrentPath.match(/[^\/]+$/)[0];
     }
+  })
+  .filter('bytes', function() {
+    return function(bytes, precision) {
+      if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+      if (typeof precision === 'undefined') precision = 1;
+      var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+        number = Math.floor(Math.log(bytes) / Math.log(1024));
+      return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+    }
   });
 
 var dvNgValidator = angular.module('dvNgValidator', [])
@@ -61,4 +67,9 @@ var dvNgValidator = angular.module('dvNgValidator', [])
 var underscore = angular.module('underscore', [])
   .factory('_', function () {
     return window._;
+  });
+
+var asyncWrapped = angular.module('asyncWrapped', [])
+  .factory('async', function () {
+    return window.async;
   });

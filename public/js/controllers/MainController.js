@@ -1,9 +1,12 @@
-ngTorrentApp.controller('MainController', function ($scope,
+ngTorrentApp.controller('MainController', function ($rootScope,
+                                                    $scope,
                                                     $http,
+                                                    $location,
                                                     ngProgress,
                                                     growl,
                                                     Torrent,
                                                     ErrorVerbosity,
+                                                    async,
                                                     _) {
   $scope.safeApply = function (fn) {
     var phase = this.$root.$$phase;
@@ -17,6 +20,8 @@ ngTorrentApp.controller('MainController', function ($scope,
   };
 
   $scope.torrents = [];
+  $scope.torrentToEdit = undefined;
+  $scope.shortFileName = '';
 
   $scope.removeFromTorrents = function (torrent) {
     ngProgress.start();
@@ -36,23 +41,32 @@ ngTorrentApp.controller('MainController', function ($scope,
     $scope.torrents.push(torrent);
   };
 
-  $scope.updateTorrentFileList = function () {
-    ngProgress.start();
+  $scope.updateTorrentFileList = function (beforeCallback, successCallback, errorCallback, afterCallback) {
+    beforeCallback = beforeCallback || function () {
+    };
+    successCallback = successCallback || function () {
+    };
+    errorCallback = errorCallback || function () {
+    };
+    afterCallback = afterCallback || function () {
+    };
+
+    beforeCallback();
     $http
       .get('torrent/list')
       .success(function (data) {
-        ngProgress.complete();
+        $scope.torrents = [];
         _.each(data.data, function (torrent) {
           $scope.addToTorrent(new Torrent(torrent));
         })
+        successCallback();
+        afterCallback();
       })
-      .error(function () {
-        growl.error('Http error on get torrent list occurred');
-        ngProgress.complete();
+      .error(function (data) {
+        errorCallback({code: data.code});
+        afterCallback();
       });
   };
-
-  $scope.updateTorrentFileList();
 
   $scope.prepareToEdit = function (torrent) {
     ngProgress.start();
@@ -60,11 +74,81 @@ ngTorrentApp.controller('MainController', function ($scope,
       .post('torrent/parse', {fileName: torrent.name})
       .success(function (data) {
         ngProgress.complete();
-        console.log(data);
+        $scope.torrentToEdit = data.data;
+        $scope.shortFileName = data.data.fileName.match(/^[^_]+_(.+)\.torrent/)[1]
+        $location.path('/edit');
       })
       .error(function (data) {
         growl.error(ErrorVerbosity[data.code]);
         ngProgress.complete();
       });
-  }
+  };
+
+  $scope.removeFrom = function (from, element) {
+    if (from) {
+      var indexOfElement = from.indexOf(element);
+      from.splice(indexOfElement, 1);
+    }
+  };
+
+  $scope.addAnnounce = function () {
+    $scope.torrentToEdit.parsed.announce.push('');
+  };
+
+  $scope.addFile = function () {
+    $scope.torrentToEdit.parsed.files.push({length: 0, name: '', offset: 0, path: ''});
+  };
+
+  $scope.saveTorrent = function () {
+    async.waterfall([
+      function (callback) {
+        ngProgress.start();
+        callback();
+      },
+      function (callback) {
+        $http
+          .post('torrent/save', {
+            fileName: $scope.fileName,
+            shortFileName: $scope.shortFileName,
+            torrentData: $scope.torrentToEdit
+          })
+          .success(function () {
+            callback();
+          })
+          .error(function (data) {
+            callback({code: data.code});
+          });
+      },
+      function (callback) {
+        $scope.updateTorrentFileList(null, callback, callback, null);
+      }
+    ], function (error) {
+      if (error) {
+        growl.error(ErrorVerbosity[error.code]);
+      } else {
+        growl.success('New torrent file was generated');
+        $location.path('/upload');
+      }
+
+      ngProgress.complete();
+    });
+  };
+
+  $scope.toHome = function () {
+    $scope.torrentToEdit = undefined;
+    $location.path('/upload');
+  };
+
+  $scope.updateTorrentFileList(
+    function () {
+      ngProgress.start();
+    },
+    null,
+    function (error) {
+      growl.error('Http error on get torrent list occurred');
+    },
+    function () {
+      ngProgress.complete();
+    }
+  );
 });

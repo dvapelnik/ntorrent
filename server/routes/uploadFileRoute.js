@@ -1,5 +1,4 @@
 var async = require('async');
-var torrentParser = require('../helpers/torrentParser');
 var fs = require('fs');
 
 module.exports = function (options) {

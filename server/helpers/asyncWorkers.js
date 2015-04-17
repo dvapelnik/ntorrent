@@ -1,4 +1,5 @@
 var fs = require('fs');
+var parseTorrent = require('parse-torrent-file');
 
 module.exports = {
   makeSessionDirWorker: function (uploadSessionPath, chmod) {
@@ -14,5 +15,22 @@ module.exports = {
         }
       });
     }
+  },
+  torrentParserWorker: function (fileContent, callback) {
+    var parsed = parseTorrent(fileContent);
+
+    //delete  parsed.info;
+    //delete  parsed.infoBuffer;
+
+    callback(null, parsed);
+  },
+  readFileWorker: function (filePath, callback) {
+    fs.readFile(filePath, function (error, fileContent) {
+      if (error) {
+        error.ownCode = 'READFILEERROR';
+      }
+
+      callback(error, fileContent);
+    })
   }
 };

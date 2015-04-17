@@ -26,6 +26,8 @@
 
     <script type="text/javascript" src="bower/underscore/underscore-min.js"></script>
 
+    <script type="text/javascript" src="bower/async/lib/async.js"></script>
+
     <script type="text/javascript" src="js/ng-app.js"></script>
     <script type="text/javascript" src="js/controllers/MainController.js"></script>
     <script type="text/javascript" src="js/controllers/UploadController.js"></script>
@@ -42,23 +44,31 @@
         </div>
     </div>
 </nav>
-<div class="container" style="margin-top: 20px;">
+<div class="container">
     <div class="row">
-        <div growl></div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2" style="text-align: center">
-                <h1>{{appName}}</h1>
+        <div class="col-md-12">
+            <div growl></div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2" style="text-align: center">
+                    <h1>{{appName}}</h1>
 
-                <h2>{{appSlogan}}</h2>
-                <hr/>
+                    <h2>{{appSlogan}}</h2>
+                    <hr/>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" ng-view>
-
+            <div class="row">
+                <div class="col-md-12" ng-view></div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12" style="height: 20px"></div>
+    </div>
 </div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">nTorrent - torrent file editor</p>
+    </div>
+</footer>
 </body>
 </html>

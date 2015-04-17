@@ -1,1 +1,113 @@
-Edit
+<form>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <button class="btn btn-primary btn-sm" ng-click="toHome()">
+                <i class="fa fa-arrow-left"></i>&nbsp;Back to upload
+            </button>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Name</label>
+                <input
+                        class="form-control input-sm"
+                        type="text"
+                        ng-model="torrentToEdit.parsed.name"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Announce</label>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-repeat="announce in torrentToEdit.parsed.announce track by $index">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input
+                                            class="form-control input-sm"
+                                            ng-model="torrentToEdit.parsed.announce[$index]"
+                                            type="text"/>
+                                    <span class="input-group-btn">
+                                        <button
+                                                class="btn btn-danger btn-sm"
+                                                title="Remove file"
+                                                ng-disabled="torrentToEdit.parsed.announce.length == 1"
+                                                ng-click="removeFrom(torrentToEdit.parsed.announce, announce)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-success btn-sm" ng-click="addAnnounce()">
+                                <i class="fa fa-plus"></i>&nbsp;Add announce
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Creation time</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                ng-model="torrentToEdit.parsed.created" readonly/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Files</label>
+                </div>
+            </div>
+            <div class="row" ng-repeat="file in torrentToEdit.parsed.files">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm" ng-model="file.path"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input
+                                    type="text"
+                                    readonly
+                                    value="{{file.length | bytes}}"
+                                    class="form-control input-sm"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2 text-center">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="shortFileName"/>
+                    <!--<input type="text" class="form-control" ng-model="torrentToEdit.fileName"/>-->
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" ng-click="saveTorrent()">
+                            <i class="fa fa-floppy-o"></i>&nbsp;Save
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

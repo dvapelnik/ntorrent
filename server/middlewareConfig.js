@@ -12,7 +12,7 @@ module.exports = function (app) {
   app.use('/storage', express.static('storage'));
 
   app.use(cookieParser('very-secret-private-string-for-cookies', {}));
-  app.use(bodyParser.json());       // to support JSON-encoded bodies
+  app.use(bodyParser.json({limit: '50mb'}));       // to support JSON-encoded bodies
   app.set('trust proxy', 1);
   app.use(session({
     resave: false,

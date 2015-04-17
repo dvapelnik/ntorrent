@@ -5,6 +5,7 @@ var uploadLinkRouteMaker = require('./routes/uploadLinkRoute');
 var torrentListRouteMaker = require('./routes/torrentList');
 var torrentRemoveRouteMaker = require('./routes/torrentRemove');
 var torrentParseRouteMaker = require('./routes/torrentParse');
+var torrentSaveRouteMaker = require('./routes/torrentSave');
 
 var fs = require('fs');
 
@@ -35,4 +36,6 @@ module.exports = function (app, options) {
   app.post('/torrent/remove', torrentRemoveRouteMaker(routeMakerOptions));
 
   app.post('/torrent/parse', torrentParseRouteMaker(routeMakerOptions));
+
+  app.post('/torrent/save', torrentSaveRouteMaker(routeMakerOptions));
 };
