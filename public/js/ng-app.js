@@ -23,7 +23,7 @@ var ngTorrentApp = angular
   })
   .run(function ($rootScope) {
     $rootScope.appName = 'nTorrent';
-    $rootScope.appSlogan = 'make and edit .torrent file!';
+    $rootScope.appSlogan = 'load and edit .torrent file!';
   })
   .factory('ErrorVerbosity', function () {
     return {
@@ -40,7 +40,8 @@ var ngTorrentApp = angular
       FILENAMEEMPTY: 'File name is empty',
       FILENOTFOUND: 'File not found',
       FILENOTDELETED: 'File not deleted',
-      MIMEERROR: 'Unsupported file type'
+      MIMEERROR: 'Unsupported file type',
+      EMAILNOTSENT: 'Email not sent'
     }
   })
   .factory('Torrent', function () {

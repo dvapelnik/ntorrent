@@ -25,21 +25,22 @@
                 <div ng-switch-when="link">
                     <div class="row" style="padding: 20px 0;">
                         <div class="col-md-6 col-md-push-3 col-sm-12">
-                            <input
-                                    style="margin: 0 auto; width: 90%;"
-                                    type="text"
-                                    class="form-control"
-                                    ng-model="torrentLink"
-                                    placeholder="Insert URL or magnet-link"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 text-center form-group">
-                            <button
-                                    ng-click="uploadTorrent(torrentLink)"
-                                    class="btn btn-success">
-                                Upload!
-                            </button>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            ng-model="torrentLink"
+                                            placeholder="Insert URL"/>
+                                    <span class="input-group-btn">
+                                        <button
+                                                ng-click="uploadTorrent(torrentLink)"
+                                                class="btn btn-success">
+                                            Upload!
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,7 +58,22 @@
     </form>
 </div>
 <div class="row">
-    <div class="col-md-8 col-md-push-2 col-sm-12">
+    <div class="col-md-3 col-md-push-8">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">@</span>
+                <input
+                        class="form-control input-sm"
+                        ng-model="email"
+                        placeholder="Input your email"
+                        type="text"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-push-1 col-sm-12">
+
         <table class="table" ng-show="torrents.length > 0">
             <tr>
                 <th>#</th>
@@ -68,19 +84,33 @@
                 <td>{{$index + 1}}</td>
                 <td>{{torrent.name}}</td>
                 <td class="text-center">
-                    <a ng-href="{{torrent.href}}" class="btn btn-xs btn-success fa fa-download"></a>
-                    <button
-                            class="btn btn-xs btn-primary"
-                            title="Edit"
-                            ng-click="prepareToEdit(torrent)">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </button>
-                    <button
-                            class="btn btn-xs btn-danger"
-                            title="Remove"
-                            ng-click="removeFromTorrents(torrent)">
-                        <i class="fa fa-times"></i>
-                    </button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group form-group" role="group">
+                                <a ng-href="{{torrent.href}}" class="btn btn-sm btn-success">
+                                    <i class="fa fa-download"></i>
+                                </a>
+                                <button
+                                        class="btn btn-sm btn-primary"
+                                        title="Edit"
+                                        ng-click="prepareToEdit(torrent)">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </button>
+                                <button
+                                        class="btn btn-sm btn-danger"
+                                        title="Remove"
+                                        ng-click="removeFromTorrents(torrent)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <button
+                                        class="btn btn-success btn-sm"
+                                        title="Send via email"
+                                        ng-click="sendFileViaEmail(torrent)">
+                                    <i class="fa fa-envelope"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>

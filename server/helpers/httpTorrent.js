@@ -35,7 +35,7 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
         if (response.headers['content-type'] == 'application/x-bittorrent') {
           var timeStamp = getCurrentTimeStamp();
           var torrentWriteStream = fs
-            .createWriteStream(pathToSave + '/' + timeStamp + '.torrent')
+            .createWriteStream(pathToSave + '/' + timeStamp + '_saved_via_link.torrent')
             .on('error', function (error) {
               error.ownCode = 'FSERROR';
               errorCallback(error)

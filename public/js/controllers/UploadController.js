@@ -9,6 +9,8 @@ ngTorrentApp.controller('UploadController', function ($scope,
   //$scope.uploadType = 'link';
   $scope.uploadType = 'file';
 
+  $scope.email = '';
+
   $scope.uploadTypes = ['file', 'link'];
   $scope.setUploadType = function (uploadType) {
     $scope.uploadType = uploadType;
@@ -50,5 +52,24 @@ ngTorrentApp.controller('UploadController', function ($scope,
           growl.error(ErrorVerbosity[data.code]);
         }
       });
+  };
+
+  $scope.sendFileViaEmail = function (torrent) {
+    if ($scope.email) {
+      ngProgress.start();
+      $http
+        .post('/send/mail', {fileName: torrent.name, email: $scope.email})
+        .success(function (data) {
+          ngProgress.complete();
+          growl.success(data.message);
+        })
+        .error(function (data) {
+          ngProgress.complete();
+          growl.error(ErrorVerbosity[data.code]);
+        });
+    } else {
+      growl.error('Email not defined');
+    }
+
   };
 });

@@ -43,7 +43,7 @@ module.exports = function (options) {
           });
       },
       function (timestamp, callback) {
-        callback(null, [uploadPath, sessionId, timestamp + '.torrent'].join('/'));
+        callback(null, [uploadPath, sessionId, timestamp + '_saved_via_link.torrent'].join('/'));
       }
     ], function (error, filePath) {
       if (error) {

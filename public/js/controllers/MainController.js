@@ -23,6 +23,7 @@ ngTorrentApp.controller('MainController', function ($rootScope,
   $scope.torrentToEdit = undefined;
   $scope.shortFileName = '';
 
+
   $scope.removeFromTorrents = function (torrent) {
     ngProgress.start();
     $http
@@ -138,6 +139,8 @@ ngTorrentApp.controller('MainController', function ($rootScope,
     $scope.torrentToEdit = undefined;
     $location.path('/upload');
   };
+
+
 
   $scope.updateTorrentFileList(
     function () {
