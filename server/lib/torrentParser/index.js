@@ -49,8 +49,6 @@ function decodeTorrentFile(torrent) {
   result.name = torrent.info.name.toString();
   result.private = !!torrent.info.private;
 
-  console.log(torrent);
-
   if (torrent.publisher) result.publisher = torrent.publisher.toString();
   if (torrent['publisher-url']) result.publisherUrl = torrent['publisher-url'].toString();
 
@@ -149,6 +147,8 @@ function encodeTorrentFile(parsed) {
 
   if (parsed.creator) torrent['created by'] = new Buffer(parsed.creator, 'utf8');
   if (parsed.created) torrent['creation date'] = (parsed.created.getTime() / 1000) | 0;
+
+  if (parsed.private !== undefined) torrent.info.private = +parsed.private;
 
   return bencode.encode(torrent)
 }

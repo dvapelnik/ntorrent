@@ -34,9 +34,8 @@ module.exports = function (options) {
         });
 
         parsed.comment = requestTorrent.comment;
-
+        parsed.private = requestTorrent.private;
         parsed.creator = requestTorrent.creator;
-
         parsed.publisher = requestTorrent.publisher;
         parsed.publisherUrl = requestTorrent.publisherUrl;
 
@@ -64,8 +63,6 @@ module.exports = function (options) {
           req.session.id,
           +new Date() + '_' + req.body.shortFileName + '.torrent'
         ].join('/');
-
-        console.log(req.body.shortFileName);
 
         callback(null, savePath, torrentBuffer);
       },

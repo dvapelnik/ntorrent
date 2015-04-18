@@ -133,6 +133,25 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-9">
+                    <div class="checkbox">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="torrentToEdit.parsed.private"> Is Private
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <button
+                            ng-class="{'btn-danger':!torrentToEdit.parsed.private, 'btn-success':torrentToEdit.parsed.private}"
+                            ng-click="torrentToEdit.parsed.private = !torrentToEdit.parsed.private"
+                            class="btn">
+                        {{torrentToEdit.parsed.private && 'Public' || 'Private'}}
+                    </button>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="torrent-encoding">Encoding</label>
