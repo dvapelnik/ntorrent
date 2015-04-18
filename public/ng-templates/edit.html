@@ -12,10 +12,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label for="torrent-name">Name</label>
                         <input
                                 class="form-control input-sm"
                                 type="text"
+                                id="torrent-name"
                                 ng-model="torrentToEdit.parsed.name"/>
                     </div>
                 </div>
@@ -62,16 +63,123 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Creation time</label>
+                        <label for="torrent-comment">Comment</label>
                         <input
                                 class="form-control input-sm"
                                 type="text"
-                                ng-model="torrentToEdit.parsed.created" readonly/>
+                                id="torrent-comment"
+                                ng-model="torrentToEdit.parsed.comment"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="torrent-creator">Torrent maker</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-creator"
+                                ng-model="torrentToEdit.parsed.creator"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="torrent-publisher">Publisher</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-publisher"
+                                ng-model="torrentToEdit.parsed.publisher"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="torrent-publisher-url">Publisher URL</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-publisher-url"
+                                ng-model="torrentToEdit.parsed.publisherUrl"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="torrent-created">Creation time</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-created"
+                                value="{{torrentToEdit.parsed.created}}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="torrent-info-hash">Info hash</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-info-hash"
+                                value="{{torrentToEdit.parsed.infoHash}}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="torrent-encoding">Encoding</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-encoding"
+                                value="{{torrentToEdit.parsed.encoding}}" readonly/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="torrent-piece-length">Piece length</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-piece-length"
+                                value="{{torrentToEdit.parsed.pieceLength | bytes}}" readonly/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="torrent-piece-count">Piece count</label>
+                        <input
+                                class="form-control input-sm"
+                                type="text"
+                                id="torrent-piece-count"
+                                value="{{torrentToEdit.parsed.pieceCount}}" readonly/>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-sm-12">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="torrent-total-filesize">Total torrent files size</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <input
+                            class="form-control input-sm text-right"
+                            type="text"
+                            id="torrent-total-filesize"
+                            value="{{torrentToEdit.parsed.totalLength | bytes}}" readonly/>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <label>Files</label>

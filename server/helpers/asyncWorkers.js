@@ -1,5 +1,6 @@
 var fs = require('fs');
-var parseTorrent = require('parse-torrent-file');
+var parseTorrent = require('../lib/torrentParser');
+//var parseTorrent = require('parse-torrent-file');
 
 module.exports = {
   makeSessionDirWorker: function (uploadSessionPath, chmod) {

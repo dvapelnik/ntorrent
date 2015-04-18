@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var fs = require('fs');
-var parseTorrent = require('parse-torrent-file');
+var parseTorrent = require('../lib/torrentParser');
+//var parseTorrent = require('parse-torrent-file');
 var Buffer = require('buffer').Buffer;
 var async = require('async');
 var asyncWorkers = require('../helpers/asyncWorkers');
@@ -31,6 +32,13 @@ module.exports = function (options) {
         parsed.announceList = _.map(parsed.announce, function (announce) {
           return [announce];
         });
+
+        parsed.comment = requestTorrent.comment;
+
+        parsed.creator = requestTorrent.creator;
+
+        parsed.publisher = requestTorrent.publisher;
+        parsed.publisherUrl = requestTorrent.publisherUrl;
 
         parsed.info.files = _.map(requestTorrent.files, function (file) {
           return {

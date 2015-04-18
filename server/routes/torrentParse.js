@@ -20,11 +20,20 @@ module.exports = function (options) {
       asyncWorkers.torrentParserWorker,
       function (parsed, callback) {
         callback(null, {
+          full: parsed,
           files: parsed.files,
+          encoding: parsed.encoding,
+          pieceLength: parsed.pieceLength,
+          pieceCount: parsed.pieces.length,
+          totalLength: parsed.length,
           announce: parsed.announce,
           comment: parsed.comment,
+          creator: parsed.creator,
           name: parsed.name,
-          created: parsed.created
+          created: parsed.created,
+          infoHash: parsed.infoHash,
+          publisher: parsed.publisher,
+          publisherUrl: parsed.publisherUrl
         })
       }
     ], function (error, data) {
