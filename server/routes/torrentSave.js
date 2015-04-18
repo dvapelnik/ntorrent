@@ -57,6 +57,8 @@ module.exports = function (options) {
           +new Date() + '_' + req.body.shortFileName + '.torrent'
         ].join('/');
 
+        console.log(req.body.shortFileName);
+
         callback(null, savePath, torrentBuffer);
       },
       function (savePath, torrentBuffer, callback) {

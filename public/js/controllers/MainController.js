@@ -21,8 +21,6 @@ ngTorrentApp.controller('MainController', function ($rootScope,
 
   $scope.torrents = [];
   $scope.torrentToEdit = undefined;
-  $scope.shortFileName = '';
-
 
   $scope.removeFromTorrents = function (torrent) {
     ngProgress.start();
@@ -76,7 +74,7 @@ ngTorrentApp.controller('MainController', function ($rootScope,
       .success(function (data) {
         ngProgress.complete();
         $scope.torrentToEdit = data.data;
-        $scope.shortFileName = data.data.fileName.match(/^[^_]+_(.+)\.torrent/)[1]
+        $scope.torrentToEdit.shortFileName = data.data.fileName.match(/^[^_]+_(.+)\.torrent/)[1]
         $location.path('/edit');
       })
       .error(function (data) {
@@ -110,7 +108,7 @@ ngTorrentApp.controller('MainController', function ($rootScope,
         $http
           .post('torrent/save', {
             fileName: $scope.fileName,
-            shortFileName: $scope.shortFileName,
+            shortFileName: $scope.torrentToEdit.shortFileName,
             torrentData: $scope.torrentToEdit
           })
           .success(function () {
@@ -139,8 +137,6 @@ ngTorrentApp.controller('MainController', function ($rootScope,
     $scope.torrentToEdit = undefined;
     $location.path('/upload');
   };
-
-
 
   $scope.updateTorrentFileList(
     function () {
