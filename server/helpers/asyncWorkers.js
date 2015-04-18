@@ -18,12 +18,12 @@ module.exports = {
     }
   },
   torrentParserWorker: function (fileContent, callback) {
-    var parsed = parseTorrent(fileContent);
-
-    //delete  parsed.info;
-    //delete  parsed.infoBuffer;
-
-    callback(null, parsed);
+    try {
+      var parsed = parseTorrent(fileContent);
+      callback(null, parsed);
+    } catch (e) {
+      callback({ownCode: 'TORRENTPARSEERROR'});
+    }
   },
   readFileWorker: function (filePath, callback) {
     fs.readFile(filePath, function (error, fileContent) {

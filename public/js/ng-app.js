@@ -41,7 +41,8 @@ var ngTorrentApp = angular
       FILENOTFOUND: 'File not found',
       FILENOTDELETED: 'File not deleted',
       MIMEERROR: 'Unsupported file type',
-      EMAILNOTSENT: 'Email not sent'
+      EMAILNOTSENT: 'Email not sent',
+      TORRENTPARSEERROR: 'Torrent parse error. It looks like torrent file is corrupted'
     }
   })
   .factory('Torrent', function () {
@@ -50,13 +51,13 @@ var ngTorrentApp = angular
       this.name = torrentPath.match(/[^\/]+$/)[0];
     }
   })
-  .filter('bytes', function() {
-    return function(bytes, precision) {
+  .filter('bytes', function () {
+    return function (bytes, precision) {
       if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
       if (typeof precision === 'undefined') precision = 1;
       var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
         number = Math.floor(Math.log(bytes) / Math.log(1024));
-      return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+      return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
     }
   });
 
