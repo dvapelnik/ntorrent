@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var fs = require('fs');
-var parseTorrent = require('../lib/torrentParser');
+var parseTorrent = require('parse-torrent-file');
 //var parseTorrent = require('parse-torrent-file');
 var Buffer = require('buffer').Buffer;
 var async = require('async');

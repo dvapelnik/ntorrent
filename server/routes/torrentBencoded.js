@@ -3,7 +3,7 @@ var async = require('async');
 var asyncWorkers = require('../helpers/asyncWorkers');
 var path = require('path');
 var fs = require('fs');
-var parseTorrent = require('../lib/torrentParser');
+var parseTorrent = require('parse-torrent-file');
 
 module.exports = function (options) {
   var config = options.config;
