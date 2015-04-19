@@ -43,13 +43,34 @@ var ngTorrentApp = angular
       MIMEERROR: 'Unsupported file type',
       EMAILNOTSENT: 'Email not sent',
       TORRENTPARSEERROR: 'Torrent parse error. It looks like torrent file is corrupted',
-      BENCODEDECODEERROR: 'Bencode decode error. String looks like incorrect'
+      BENCODEDECODEERROR: 'Bencode decode error. String looks like incorrect or broken',
+      JSONFORMATERROR: 'JSON decode error. JSON string looks like incorrect or broken',
+      FIELDREQIRED: 'Request body is incomplete. Fill required fields'
     }
   })
   .factory('Torrent', function () {
     return function Torrent(torrentPath) {
       this.href = torrentPath;
       this.name = torrentPath.match(/[^\/]+$/)[0];
+    }
+  })
+  .factory('generator', function () {
+    return function (length, isAlphabeticalOnly) {
+      length = length || 8;
+      isAlphabeticalOnly = isAlphabeticalOnly !== undefined ? isAlphabeticalOnly : false;
+
+      var alphaArray = 'qwertyuiopasdfghjklzxcvbnm'.split('');
+      var numArray = '0987654321'.split('');
+
+      var arr = isAlphabeticalOnly ? alphaArray : alphaArray.concat(numArray);
+
+      var result = '';
+
+      _.times(length, function () {
+        result += _.sample(arr);
+      });
+
+      return result;
     }
   })
   .filter('bytes', function () {

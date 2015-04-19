@@ -6,7 +6,7 @@ var torrentListRouteMaker = require('./routes/torrentList');
 var torrentRemoveRouteMaker = require('./routes/torrentRemove');
 var torrentParseRouteMaker = require('./routes/torrentParse');
 var torrentSaveRouteMaker = require('./routes/torrentSave');
-var torrentBencodedRouteMaker = require('./routes/torrentBencoded');
+var torrentTextRouteMaker = require('./routes/torrentText');
 var sendMailRouteMaker = require('./routes/sendMail');
 
 var fs = require('fs');
@@ -41,7 +41,7 @@ module.exports = function (app, options) {
 
   app.post('/torrent/save', torrentSaveRouteMaker(routeMakerOptions));
 
-  app.post('/torrent/bencoded', torrentBencodedRouteMaker(routeMakerOptions));
+  app.post('/torrent/text', torrentTextRouteMaker(routeMakerOptions));
 
   app.post('/send/mail', sendMailRouteMaker(routeMakerOptions));
 };

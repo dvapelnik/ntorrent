@@ -21,10 +21,17 @@
                     </button>
                     <button
                             type="button"
-                            ng-class="{'btn-info': uploadType == 'text'}"
-                            ng-click="setUploadType('text')"
+                            ng-class="{'btn-info': uploadType == 'bencoded'}"
+                            ng-click="setUploadType('bencoded')"
                             class="btn btn-default">
                         <i class="fa fa-file-text"></i>&nbsp;Bencoded text
+                    </button>
+                    <button
+                            type="button"
+                            ng-class="{'btn-info': uploadType == 'json'}"
+                            ng-click="setUploadType('json')"
+                            class="btn btn-default">
+                        <i class="fa fa-code"></i>&nbsp;JSON data
                     </button>
                 </div>
             </div>
@@ -60,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-switch-when="text">
+                <div ng-switch-when="bencoded">
                     <div class="row">
                         <div class="col-md-8 col-md-push-2">
                             <textarea
@@ -93,13 +100,58 @@
                     <div class="row" style="margin-top: 20px">
                         <div class="col-md-8 col-md-push-2 text-center">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-info" ng-click="setBencodedExample()">
+                                <button class="btn btn-info" ng-click="setExample('bencoded')">
                                     <i class="fa fa-bolt"></i>&nbsp;Set example
                                 </button>
-                                <button class="btn btn-warning" ng-click="clearBencodedText()">
+                                <button class="btn btn-warning" ng-click="clearExample('bencoded')">
                                     <i class="fa fa-eraser"></i>&nbsp;Clear
                                 </button>
-                                <button class="btn btn-primary" ng-click="tryText()">
+                                <button class="btn btn-primary" ng-click="tryText('bencoded')">
+                                    <i class="fa fa-space-shuttle"></i>&nbsp;Try it!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-switch-when="json">
+                    <div class="row">
+                        <div class="col-md-8 col-md-push-2">
+                            <textarea
+                                    class="form-control"
+                                    rows="6"
+                                    placeholder="Input JSON data"
+                                    ng-model="$parent.jsonText"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-6 col-md-push-3 text-left">
+                            Fields required: <br/>
+                            <code>info</code>, <code>info.name</code>, <code>info[piece length]</code>, <code>info.pieces</code><br/>
+
+                            One of:
+                            <ul>
+                                <li><code>path</code> and <code>length</code> for each item in <code>info.files</code>
+                                    (when multiple files)
+                                </li>
+                                <li><code>path</code> and <code>length</code> for <code>info.files</code> (when single
+                                    file)
+                                </li>
+                            </ul>
+                            For example look <a href="http://en.wikipedia.org/wiki/Torrent_file#Examples"
+                                                target="_blank"><i class="fa fa-external-link"></i>&nbsp;this</a> JSON
+                            structure
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-8 col-md-push-2 text-center">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-info" ng-click="setExample('json')">
+                                    <i class="fa fa-bolt"></i>&nbsp;Set example
+                                </button>
+                                <button class="btn btn-warning" ng-click="clearExample('json')">
+                                    <i class="fa fa-eraser"></i>&nbsp;Clear
+                                </button>
+                                <button class="btn btn-primary" ng-click="tryText('json')">
                                     <i class="fa fa-space-shuttle"></i>&nbsp;Try it!
                                 </button>
                             </div>
