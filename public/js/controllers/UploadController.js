@@ -30,10 +30,10 @@ ngTorrentApp.controller('UploadController', function ($scope,
     "encoding": "UTF-8"
   };
 
-  //$scope.uploadType = 'file';
+  $scope.uploadType = 'file';
   //$scope.uploadType = 'link';
   //$scope.uploadType = 'bencoded';
-  $scope.uploadType = 'json';
+  //$scope.uploadType = 'json';
 
   $scope.email = '';
   $scope.bencodedText = '';
