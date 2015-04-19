@@ -1,8 +1,26 @@
-var parseTorrent = require('parse-torrent-file');
-var fs = require('fs');
+var bencode = require('bencode');
+var generator = require('./server/helpers/generator');
 
-var src = '/home/dvapelnik/Work/WebProjects/ua.web.challenge/phpstorm/ntorrent/storage/uploaded/cg2bzrey4fbgyve1kyy5h8iwc7qepef8/1429275002173_[pornoshara.tv].id137669__La_Parrucchiera_al_Mio_Servizio_avi.torrent';
-var dst = '/home/dvapelnik/Work/WebProjects/ua.web.challenge/phpstorm/ntorrent/storage/uploaded/cg2bzrey4fbgyve1kyy5h8iwc7qepef8/1429275002173_[pornoshara.tv].id137669__La_Parrucchiera_al_Mio_Servizio_avi___.torrent';
+var data = {
+  "info": {
+    "name": "basePath",
+    "files": [
+      {"path": "basePath.das", "length": 1231551251},
+      {"path": "basePath.da", "length": 1231551251},
+      {"path": "basePath.sw", "length": 12315512},
+      {"path": "basePath.f3", "length": 12315512},
+      {"path": "basePath.g33", "length": 12315512}
+    ],
+    "private": 1,
+    "piece length": 4 * 1024 * 1024,
+    "pieces": generator(4550)
+  },
+  "announce": ["announce"],
+  "announce-list": [["announce"], ["dasdasdasa"]],
+  "creation date": 1429380844,
+  "comment": "Some comment",
+  "created by": "dasdadwaD W AWD ADAS DASDsadasdasd",
+  "encoding": "UTF-8"
+};
 
-var parsed = parseTorrent(fs.readFileSync(src));
-fs.writeFileSync(dst, parseTorrent.encode(parsed));
+console.log(bencode.encode(data).toString());

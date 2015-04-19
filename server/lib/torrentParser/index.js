@@ -29,8 +29,8 @@ function decodeTorrentFile(torrent) {
   // sanity check
   ensure(torrent.info, 'info');
   ensure(torrent.info.name, 'info.name');
-  ensure(torrent.info['piece length'], 'info[\'piece length\']');
-  ensure(torrent.info.pieces, 'info.pieces');
+  //ensure(torrent.info['piece length'], 'info[\'piece length\']');
+  //ensure(torrent.info.pieces, 'info.pieces');
 
   if (torrent.info.files) {
     torrent.info.files.forEach(function (file) {
@@ -105,9 +105,11 @@ function decodeTorrentFile(torrent) {
 
   var lastFile = result.files[result.files.length - 1];
 
-  result.pieceLength = torrent.info['piece length'];
-  result.lastPieceLength = ((lastFile.offset + lastFile.length) % result.pieceLength) || result.pieceLength;
-  result.pieces = splitPieces(torrent.info.pieces);
+  if (torrent.info['piece length'] && torrent.info.pieces) {
+    result.pieceLength = torrent.info['piece length'];
+    result.lastPieceLength = ((lastFile.offset + lastFile.length) % result.pieceLength) || result.pieceLength;
+    result.pieces = splitPieces(torrent.info.pieces);
+  }
 
   return result
 }

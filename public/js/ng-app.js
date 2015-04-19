@@ -42,7 +42,8 @@ var ngTorrentApp = angular
       FILENOTDELETED: 'File not deleted',
       MIMEERROR: 'Unsupported file type',
       EMAILNOTSENT: 'Email not sent',
-      TORRENTPARSEERROR: 'Torrent parse error. It looks like torrent file is corrupted'
+      TORRENTPARSEERROR: 'Torrent parse error. It looks like torrent file is corrupted',
+      BENCODEDECODEERROR: 'Bencode decode error. String looks like incorrect'
     }
   })
   .factory('Torrent', function () {

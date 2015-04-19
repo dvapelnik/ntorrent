@@ -25,7 +25,7 @@ module.exports = function (options) {
           encoding: parsed.encoding,
           pieceLength: parsed.pieceLength,
           private: parsed.private,
-          pieceCount: parsed.pieces.length,
+          pieceCount: parsed.pieces ? parsed.pieces.length : undefined,
           totalLength: parsed.length,
           announce: parsed.announce,
           comment: parsed.comment,

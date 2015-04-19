@@ -3,7 +3,7 @@
         <div class="col-md-12 col-sm-12">
             <h3 class="text-center">Upload .torrent file</h3>
 
-            <div class="row">
+            <div class="row" style="margin-bottom: 20px;">
                 <div class="btn-group" role="group" aria-label="...">
                     <button
                             type="button"
@@ -19,11 +19,18 @@
                             class="btn btn-default">
                         <i class="fa fa-link"></i>&nbsp;Insert link
                     </button>
+                    <button
+                            type="button"
+                            ng-class="{'btn-info': uploadType == 'text'}"
+                            ng-click="setUploadType('text')"
+                            class="btn btn-default">
+                        <i class="fa fa-file-text"></i>&nbsp;Bencoded text
+                    </button>
                 </div>
             </div>
             <div ng-switch="uploadType">
                 <div ng-switch-when="link">
-                    <div class="row" style="padding: 20px 0;">
+                    <div class="row">
                         <div class="col-md-6 col-md-push-3 col-sm-12">
                             <div class="form-group">
                                 <div class="input-group">
@@ -45,10 +52,28 @@
                     </div>
                 </div>
                 <div ng-switch-when="file">
-                    <div class="row" style="padding: 20px 0;">
+                    <div class="row">
                         <div class="col-md-4 col-md-push-4 col-sm-12">
                             <button class="btn btn-primary" ng-file-select ng-file-change="upload($files)">
                                 <i class="fa fa-upload"></i>&nbsp;Select the file and upload it
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div ng-switch-when="text">
+                    <div class="row">
+                        <div class="col-md-8 col-md-push-2">
+                            <textarea
+                                    class="form-control"
+                                    rows="3"
+                                    placeholder="Input bencoded text here"
+                                    ng-model="$parent.bencodedText"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-8 col-md-push-2 text-center">
+                            <button class="btn btn-primary" ng-click="tryText()">
+                                <i class="fa fa-space-shuttle"></i>&nbsp;Try it!
                             </button>
                         </div>
                     </div>

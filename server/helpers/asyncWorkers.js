@@ -22,6 +22,8 @@ module.exports = {
       var parsed = parseTorrent(fileContent);
       callback(null, parsed);
     } catch (e) {
+      console.log(e);
+      console.log(e.stack);
       callback({ownCode: 'TORRENTPARSEERROR'});
     }
   },

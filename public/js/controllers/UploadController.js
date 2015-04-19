@@ -6,10 +6,12 @@ ngTorrentApp.controller('UploadController', function ($scope,
                                                       $http,
                                                       ErrorVerbosity,
                                                       Torrent) {
+  //$scope.uploadType = 'file';
   //$scope.uploadType = 'link';
-  $scope.uploadType = 'file';
+  $scope.uploadType = 'text';
 
   $scope.email = '';
+  $scope.bencodedText = '';
 
   $scope.uploadTypes = ['file', 'link'];
   $scope.setUploadType = function (uploadType) {
@@ -51,6 +53,22 @@ ngTorrentApp.controller('UploadController', function ($scope,
         if (data.status == 'ERROR') {
           growl.error(ErrorVerbosity[data.code]);
         }
+      });
+  };
+
+  $scope.tryText = function () {
+    ngProgress.start();
+
+    $http
+      .post('/torrent/bencoded', {bencodedText: $scope.bencodedText})
+      .success(function (data) {
+        ngProgress.complete();
+        $scope.bencodedText = '';
+        $scope.addToTorrent(new Torrent(data.data));
+      })
+      .error(function (data) {
+        growl.error(ErrorVerbosity[data.code]);
+        ngProgress.complete();
       });
   };
 
