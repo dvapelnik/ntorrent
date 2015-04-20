@@ -9,9 +9,9 @@ sudo apt-get install nodejs npm libfontconfig -y
 cd /usr/bin/ && sudo ln -s nodejs node
 
 sudo npm install -g bower
-cd /var/www/html && sudo bower update --allow-root
+cd /var/www/html && sudo bower install --allow-root
 
-cd /var/www/html && npm update
+cd /var/www/html && npm install
 
 cat /etc/shadow | grep vagrant
 
