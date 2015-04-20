@@ -39,23 +39,30 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
 
         if (['application/x-bittorrent', 'application/octet-stream', 'application/force-download']
             .indexOf(response.headers['content-type']) > -1) {
+
           var timeStamp = getCurrentTimeStamp();
+          var matches;
+          var fileNameFromUrl;
 
-          var fileName;
+          if (matches = urlParsed.path.match(/[^\/]+.torrent$/)) {
+            fileNameFromUrl = matches[0];
+          } else {
+            try {
+              var responseContentDispositions = contentDisposition.parse(response.headers['content-disposition']);
 
-          try {
-            var responseContentDispositions = contentDisposition.parse(response.headers['content-disposition']);
-
-            if (responseContentDispositions.type == 'attachment' &&
-              responseContentDispositions.parameters &&
-              responseContentDispositions.parameters.filename) {
-              fileName = [timeStamp, responseContentDispositions.parameters.filename].join('_');
-            } else {
-              throw new Error('Content Disposition in incorrect');
+              if (responseContentDispositions.type == 'attachment' &&
+                responseContentDispositions.parameters &&
+                responseContentDispositions.parameters.filename) {
+                fileNameFromUrl = responseContentDispositions.parameters.filename;
+              } else {
+                throw new Error('Content Disposition in incorrect');
+              }
+            } catch (e) {
+              fileNameFromUrl = 'saved_via_link.torrent';
             }
-          } catch (e) {
-            fileName = [timeStamp, 'saved_via_link.torrent'].join('_');
           }
+
+          var fileName = [timeStamp, fileNameFromUrl].join('_');
 
           var torrentWriteStream = fs
             .createWriteStream(pathToSave + '/' + fileName)
