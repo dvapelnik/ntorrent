@@ -43,6 +43,7 @@ var ngTorrentApp = angular
       MIMEERROR: 'Unsupported file type',
       EMAILNOTSENT: 'Email not sent',
       TORRENTPARSEERROR: 'Torrent parse error. It looks like torrent file is corrupted',
+      TORRENTENCODEERROR: 'Torrent encode error. It looks like torrent parsed data is corrupted',
       BENCODEDECODEERROR: 'Bencode decode error. String looks like incorrect or broken',
       JSONFORMATERROR: 'JSON decode error. JSON string looks like incorrect or broken',
       FIELDREQIRED: 'Request body is incomplete. Fill required fields'

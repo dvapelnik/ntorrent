@@ -46,13 +46,16 @@ module.exports = function (options) {
           }
         },
         function (uploadSessionPath, decoded, callback) {
-          console.log(decoded);
+          try {
+            var torrentBuffer = parseTorrent.encode(decoded);
 
-          var torrentBuffer = parseTorrent.encode(decoded);
+            callback(null, uploadSessionPath, torrentBuffer);
+          } catch (e) {
+            console.log(e);
+            console.log(e.stack);
 
-          console.log(torrentBuffer);
-
-          callback(null, uploadSessionPath, torrentBuffer);
+            callback({ownCode: 'TORRENTENCODEERROR'});
+          }
         },
         function (uploadSessionPath, torrentBuffer, callback) {
           var savePath = [

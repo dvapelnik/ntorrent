@@ -144,10 +144,10 @@
                 </div>
                 <div class="col-md-3 text-center">
                     <button
-                            ng-class="{'btn-danger':!torrentToEdit.parsed.private, 'btn-success':torrentToEdit.parsed.private}"
+                            ng-class="{'btn-danger':torrentToEdit.parsed.private == true, 'btn-success':torrentToEdit.parsed.private == false}"
                             ng-click="torrentToEdit.parsed.private = !torrentToEdit.parsed.private"
                             class="btn">
-                        {{torrentToEdit.parsed.private && 'Public' || 'Private'}}
+                        {{torrentToEdit.parsed.private && 'Private' || 'Public'}}
                     </button>
                 </div>
             </div>

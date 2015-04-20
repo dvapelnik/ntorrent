@@ -20,7 +20,7 @@
     "express": "^4.12.3",
     "mime": "^1.3.4",
     "nodemailer": "^1.3.4",
-    "parse-torrent-file":"dvapelnik/parse-torrent-file#d81fd922db668a891ee37368af350b3c719769f2",
+    "parse-torrent-file":"dvapelnik/parse-torrent-file#05bc6a7dd7589f7a0cb62a400ecbbf86735dd0d7",
     "request": "^2.55.0",
     "simple-sha1": "^2.0.7",
     "supervisor": "^0.6.0",
