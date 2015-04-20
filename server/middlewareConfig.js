@@ -8,6 +8,7 @@ module.exports = function (app) {
   app.use('/bower', express.static('public/bower'));
   app.use('/js', express.static('public/js'));
   app.use('/css', express.static('public/css'));
+  app.use('/images', express.static('public/images'));
   app.use('/ng-templates', express.static('public/ng-templates'));
   app.use('/storage', express.static('storage'));
 

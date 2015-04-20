@@ -23,7 +23,7 @@ var ngTorrentApp = angular
   })
   .run(function ($rootScope) {
     $rootScope.appName = 'nTorrent';
-    $rootScope.appSlogan = 'load and edit .torrent file!';
+    $rootScope.appSlogan = 'upload and edit .torrent file!';
   })
   .factory('ErrorVerbosity', function () {
     return {

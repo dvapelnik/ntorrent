@@ -37,26 +37,28 @@
 </head>
 <body>
 <div growl></div>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/#/upload">{{appName}}</a>
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="jumbotron col-md-12" style="text-align: center">
                     <h1>{{appName}}</h1>
-
+                    <hr width="50%"/>
                     <h2>{{appSlogan}}</h2>
                     <hr/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12" ng-view></div>
+                <div class="container">
+                    <div class="col-md-12" ng-view></div>
+                </div>
             </div>
         </div>
     </div>
@@ -66,7 +68,17 @@
 </div>
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">nTorrent - torrent file editor</p>
+        <div class="row">
+            <div class="col-md-3">
+                <p class="text-muted">nTorrent - torrent file editor</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <p class="text-muted text-center">UaWebChallenge VII 2015</p>
+            </div>
+            <div class="col-md-3">
+                <p class="text-muted text-right">Developed by @dvapelnik</p>
+            </div>
+        </div>
     </div>
 </footer>
 </body>

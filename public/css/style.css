@@ -34,7 +34,7 @@ body {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: #222;
 }
 
 body > .container {
@@ -48,4 +48,14 @@ body > .container {
 .footer > .container {
     padding-right: 15px;
     padding-left: 15px;
+}
+
+.navbar{
+    margin: 0;
+    border-radius: 0;
+}
+
+.jumbotron{
+    background-image: url("../images/bg.jpg");
+    background-size: cover;
 }
