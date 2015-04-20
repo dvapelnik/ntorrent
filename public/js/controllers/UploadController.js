@@ -1,5 +1,6 @@
 ngTorrentApp.controller('UploadController', function ($scope,
                                                       $rootScope,
+                                                      $document,
                                                       growl,
                                                       $upload,
                                                       ngProgress,
@@ -37,6 +38,7 @@ ngTorrentApp.controller('UploadController', function ($scope,
 
   $scope.email = '';
   $scope.bencodedText = '';
+  $scope.jsonText = '';
 
   $scope.uploadTypes = ['file', 'link'];
   $scope.setUploadType = function (uploadType) {
@@ -56,6 +58,7 @@ ngTorrentApp.controller('UploadController', function ($scope,
         .success(function (data) {
           ngProgress.complete();
           $scope.addToTorrent(new Torrent(data.data));
+          $scope.scrollTo('table-of-torrents-container');
         })
         .error(function (data) {
           ngProgress.complete();
@@ -72,6 +75,7 @@ ngTorrentApp.controller('UploadController', function ($scope,
       .success(function (data) {
         ngProgress.complete();
         $scope.addToTorrent(new Torrent(data.data));
+        $scope.scrollTo('table-of-torrents-container');
       })
       .error(function (data) {
         ngProgress.complete();
@@ -88,8 +92,9 @@ ngTorrentApp.controller('UploadController', function ($scope,
       .post('/torrent/text', {text: $scope[type + 'Text'], type: type})
       .success(function (data) {
         ngProgress.complete();
-        $scope.jsonText = '';
+        $scope[type + 'Text'] = '';
         $scope.addToTorrent(new Torrent(data.data));
+        $scope.scrollTo('table-of-torrents-container');
       })
       .error(function (data) {
         growl.error(ErrorVerbosity[data.code]);

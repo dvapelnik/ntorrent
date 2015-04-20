@@ -2,7 +2,7 @@ var ngTorrentApp = angular
   .module('ntorrent', [
     'ngRoute', 'angular-growl', 'dvNgValidator',
     'angularFileUpload', 'ngProgress', 'underscore',
-    'asyncWrapped'
+    'asyncWrapped', 'duScroll'
   ])
   .config(function ($routeProvider, growlProvider) {
     growlProvider.globalReversedOrder(true);
@@ -21,7 +21,7 @@ var ngTorrentApp = angular
         redirectTo: '/upload'
       });
   })
-  .run(function ($rootScope) {
+  .run(function ($rootScope, $anchorScroll) {
     $rootScope.appName = 'nTorrent';
     $rootScope.appSlogan = 'upload and edit .torrent file!';
   })

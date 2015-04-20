@@ -162,7 +162,7 @@
         </div>
     </form>
 </div>
-<div class="row">
+<div class="row" ng-show="torrents.length > 0">
     <div class="col-md-3 col-md-push-8">
         <div class="form-group">
             <div class="input-group">
@@ -176,9 +176,8 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" id="table-of-torrents-container">
     <div class="col-md-10 col-md-push-1 col-sm-12">
-
         <table class="table" ng-show="torrents.length > 0">
             <tr>
                 <th>#</th>

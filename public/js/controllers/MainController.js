@@ -2,6 +2,8 @@ ngTorrentApp.controller('MainController', function ($rootScope,
                                                     $scope,
                                                     $http,
                                                     $location,
+                                                    $document,
+                                                    $timeout,
                                                     ngProgress,
                                                     growl,
                                                     Torrent,
@@ -150,4 +152,15 @@ ngTorrentApp.controller('MainController', function ($rootScope,
       ngProgress.complete();
     }
   );
+
+  $scope.scrollTo = function (elementId) {
+    var duration = 1000;
+    var offset = 30;
+
+    var tableTorrents = angular.element(document.getElementById(elementId));
+
+    $timeout(function () {
+      $document.scrollToElement(tableTorrents, offset, duration);
+    }, 500);
+  }
 });

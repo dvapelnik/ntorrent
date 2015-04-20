@@ -4,4 +4,6 @@ ngTorrentApp.controller('EditController', function ($scope, $location, ngProgres
   }
 
   console.info($scope.torrentToEdit);
+
+  $scope.scrollTo('edit-top-form');
 });
