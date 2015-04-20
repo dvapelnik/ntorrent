@@ -9,7 +9,7 @@ function getCurrentTimeStamp() {
 module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, errorCallback) {
   var urlParsed = Url.parse(url);
 
-  if (!urlParsed.hostname || !urlParsed.host || !urlParsed.protocol || urlParsed.protocol === 'magnet:') {
+  if (!urlParsed.hostname || !urlParsed.host || !urlParsed.protocol) {
     errorCallback({ownCode: 'URLWRONGERROR'});
   } else {
     var torrentHttpRequest = request
@@ -23,7 +23,7 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
           'Host': urlParsed.hostname,
           'Connection': 'keep-alive',
           'Accept-Encoding': 'gzip, deflate, sdch',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept': 'text/html,application/xhtml+xml,application/xml,application/x-bittorrent;q=0.9,image/webp,*/*;q=0.8',
           'Accept-Language': 'ru,en-US;q=0.8,en;q=0.6,uk;q=0.4'
         }
       })
@@ -36,7 +36,8 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
           errorCallback({ownCode: 'HTTPERROR'});
         }
 
-        if (response.headers['content-type'] == 'application/x-bittorrent') {
+        if (['application/x-bittorrent', 'application/octet-stream', 'application/force-download']
+            .indexOf(response.headers['content-type']) > -1) {
           var timeStamp = getCurrentTimeStamp();
           var torrentWriteStream = fs
             .createWriteStream(pathToSave + '/' + timeStamp + '_saved_via_link.torrent')
@@ -49,8 +50,8 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
             });
 
           torrentHttpRequest.pipe(torrentWriteStream);
-        } else {
-
+        }
+        else {
           errorCallback({ownCode: 'CONTENTTYPEERROR'});
         }
       });
