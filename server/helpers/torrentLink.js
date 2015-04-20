@@ -35,15 +35,15 @@ module.exports = function (options) {
       function (uploadSessionPath, callback) {
         httpTorrentDownloader(
           url, uploadSessionPath,
-          function (timeStamp) {
-            callback(null, timeStamp)
+          function (fileName) {
+            callback(null, fileName)
           },
           function (error) {
             callback(error);
           });
       },
-      function (timestamp, callback) {
-        callback(null, [uploadPath, sessionId, timestamp + '_saved_via_link.torrent'].join('/'));
+      function (fileName, callback) {
+        callback(null, [uploadPath, sessionId, fileName].join('/'));
       }
     ], function (error, filePath) {
       if (error) {

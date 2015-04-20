@@ -1,6 +1,7 @@
 var fs = require('fs');
 var request = require('request').defaults({jar: true});
 var Url = require('url');
+var contentDisposition = require('content-disposition')
 
 function getCurrentTimeStamp() {
   return +new Date();
@@ -39,14 +40,31 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
         if (['application/x-bittorrent', 'application/octet-stream', 'application/force-download']
             .indexOf(response.headers['content-type']) > -1) {
           var timeStamp = getCurrentTimeStamp();
+
+          var fileName;
+
+          try {
+            var responseContentDispositions = contentDisposition.parse(response.headers['content-disposition']);
+
+            if (responseContentDispositions.type == 'attachment' &&
+              responseContentDispositions.parameters &&
+              responseContentDispositions.parameters.filename) {
+              fileName = [timeStamp, responseContentDispositions.parameters.filename].join('_');
+            } else {
+              throw new Error('Content Disposition in incorrect');
+            }
+          } catch (e) {
+            fileName = [timeStamp, 'saved_via_link.torrent'].join('_');
+          }
+
           var torrentWriteStream = fs
-            .createWriteStream(pathToSave + '/' + timeStamp + '_saved_via_link.torrent')
+            .createWriteStream(pathToSave + '/' + fileName)
             .on('error', function (error) {
               error.ownCode = 'FSERROR';
               errorCallback(error)
             })
             .on('close', function () {
-              successCallback(timeStamp);
+              successCallback(fileName);
             });
 
           torrentHttpRequest.pipe(torrentWriteStream);
