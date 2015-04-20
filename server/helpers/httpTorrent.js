@@ -18,9 +18,13 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
         followRedirect: true,
         headers: {
           'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36',
-          'Referer': urlParsed.protocol + '://' + urlParsed.hostname + '/',
+          'Referer': urlParsed.protocol + '//' + urlParsed.hostname + '/',
+          'Accept-language': 'en',
           'Host': urlParsed.hostname,
-          'Connection': 'keep-alive'
+          'Connection': 'keep-alive',
+          'Accept-Encoding': 'gzip, deflate, sdch',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'ru,en-US;q=0.8,en;q=0.6,uk;q=0.4'
         }
       })
       .on('error', function (error) {
@@ -28,10 +32,10 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
         errorCallback(error);
       })
       .on('response', function (response) {
-        if (response.statusCode !== 200) {
+        if (response.statusCode >= 400) {
           errorCallback({ownCode: 'HTTPERROR'});
         }
-        //@todo check response code - report client about error on 400+
+
         if (response.headers['content-type'] == 'application/x-bittorrent') {
           var timeStamp = getCurrentTimeStamp();
           var torrentWriteStream = fs
@@ -46,6 +50,7 @@ module.exports = function getTorrentFromUrl(url, pathToSave, successCallback, er
 
           torrentHttpRequest.pipe(torrentWriteStream);
         } else {
+
           errorCallback({ownCode: 'CONTENTTYPEERROR'});
         }
       });
