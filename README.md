@@ -1,6 +1,10 @@
+# nTorrent
+
+## simple torrent-file editor
+
 Демо-версия: http://ntorrent.vapelnik.pp.ua/
 
-Библиотека для работы с содержимым torrent-файлов подтягивается как зависимось с моего репозитория на GitHub https://github.com/dvapelnik/parse-torrent-file
+Библиотека для работы с содержимым torrent-файлов подтягивается как зависимость с  репозитория на GitHub https://github.com/dvapelnik/parse-torrent-file
 
 Все файлы, которые загружаются, скачиваются по ссылке или генерируются из текста (bencoded, json) сохраняются в директории storage/uploaded/{session.id}/*.torrent. Эта директория доступна для прямого доступа по HTTP. все имена файлов генерируются с префиксом current unix timestamp.
 
@@ -16,16 +20,17 @@
 
 Протестировано со скачиванием по следующим ссылкам и файлам, которые лежат в папке torrents
 
-http://www.torrentino.net/torrent/170259/download
-http://www.torrentino.net/torrent/620967/download
-http://katushka.net/download.php?id=177343
-http://katushka.net/download.php?id=177342
-http://filmitorrent.org/torrenti/Domashneye.Video.2014.DUAL.BDRip.x264.-HELLYWOO_22776.torrent
-http://tfile.me/forum/download.php?id=742926&uk=1111111111
-http://tfile.me/forum/download.php?id=742204&uk=1111111111
-http://fost.ws/engine/download.php?id=23912
+1. http://www.torrentino.net/torrent/170259/download
+2. http://www.torrentino.net/torrent/620967/download
+3. http://katushka.net/download.php?id=177343
+4. http://katushka.net/download.php?id=177342
+5. http://filmitorrent.org/torrenti/Domashneye.Video.2014.DUAL.BDRip.x264.-HELLYWOO_22776.torrent
+6. http://tfile.me/forum/download.php?id=742926&uk=1111111111
+7. http://tfile.me/forum/download.php?id=742204&uk=1111111111
+8. http://fost.ws/engine/download.php?id=23912
 
 Не умеет скачивать файлы с ресурса http://ex.ua - ресурс возвращает Content-Type:text/html при обращении к торренту по ссылке с сайта, например ссылка: http://www.ex.ua/torrent/801584
 
 Запустить можно в Vagrant-окружении:
-vagrant up
+
+`vagrant up`
