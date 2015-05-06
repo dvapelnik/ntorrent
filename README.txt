@@ -1,3 +1,5 @@
+Демо-версия: http://ntorrent.vapelnik.pp.ua/
+
 Библиотека для работы с содержимым torrent-файлов подтягивается как зависимось с моего репозитория на GitHub https://github.com/dvapelnik/parse-torrent-file
 
 Все файлы, которые загружаются, скачиваются по ссылке или генерируются из текста (bencoded, json) сохраняются в директории storage/uploaded/{session.id}/*.torrent. Эта директория доступна для прямого доступа по HTTP. все имена файлов генерируются с префиксом current unix timestamp.
