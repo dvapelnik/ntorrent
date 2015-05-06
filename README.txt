@@ -17,12 +17,13 @@
 http://www.torrentino.net/torrent/170259/download
 http://www.torrentino.net/torrent/620967/download
 http://katushka.net/download.php?id=177343
-http://sansara.pp.ua/files/torrents/t.torrent
 http://katushka.net/download.php?id=177342
 http://filmitorrent.org/torrenti/Domashneye.Video.2014.DUAL.BDRip.x264.-HELLYWOO_22776.torrent
 http://tfile.me/forum/download.php?id=742926&uk=1111111111
 http://tfile.me/forum/download.php?id=742204&uk=1111111111
 http://fost.ws/engine/download.php?id=23912
 
-Не умеет скачивать файлы с ресурса http://ex.ua - ресурс возвращает Content-Type:text/html при обращении к торренту по ссылке с сайта, например ссылка:
-http://www.ex.ua/torrent/801584
+Не умеет скачивать файлы с ресурса http://ex.ua - ресурс возвращает Content-Type:text/html при обращении к торренту по ссылке с сайта, например ссылка: http://www.ex.ua/torrent/801584
+
+Запустить можно в Vagrant-окружении:
+vagrant up
